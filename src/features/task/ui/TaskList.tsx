@@ -60,7 +60,6 @@ const TaskList: React.FC = () => {
       setTotalTasks(res.total);
     } catch (err) {
       console.error("Error fetching tasks:", err);
-      toast.error("Failed to load tasks");
     }
   };
 
