@@ -1,5 +1,5 @@
-// src/styles/Header.scss
-@import "./variables.scss";
+@use "./variables.scss" as *;
+@use "sass:color";
 
 .app-header {
   background: $bg-white;
@@ -55,7 +55,7 @@
       transition: background 0.2s;
 
       &:hover {
-        background: darken($danger-color, 8%);
+        $background-color: color.adjust($danger-color, $lightness: 8%);
       }
     }
   }

@@ -1,5 +1,5 @@
-// src/styles/ModalWrapper.scss
-@import "./variables.scss";
+@use "./variables.scss" as *;
+@use "sass:color";
 
 .overlay {
   position: fixed;

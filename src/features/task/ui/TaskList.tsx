@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { Task, TaskStatus } from "../../../entities/task/types";
 import { fetchTasks, deleteTask, updateTask, createTask } from "../api/taskApi";
 import {
@@ -12,17 +11,14 @@ import {
   FaFilter,
   FaUndo,
   FaPlus,
+  FaSortUp,
+  FaSortDown,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "../../../styles/TaskList.scss";
 import TaskFormModal from "./modals/TaskFormModal";
 import ModalWrapper from "./modals/ModalWrapper";
 import Pagination from "../../../shared/components/Pagination";
-
-// Define an interface for the decoded token payload.
-interface TokenPayload {
-  role: string;
-}
 
 const statusIcon = {
   pending: <FaHourglassStart />,
@@ -39,57 +35,44 @@ const TaskList: React.FC = () => {
 
   // Filter and sort state
   const [statusFilter, setStatusFilter] = useState<TaskStatus | "">("");
-  const [sortBy, setSortBy] = useState<"created_at" | "updated_at">(
-    "created_at"
-  );
+  const [sortBy, setSortBy] = useState<
+    "created_at" | "updated_at" | "title" | "status"
+  >("created_at");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [dateFilter, setDateFilter] = useState<string>("");
 
   // Modal and editing state
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editing, setEditing] = useState<Task | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
 
-  // Decode token from localStorage to get the user's role.
-  const token = localStorage.getItem("token");
-  let userRole = "user";
-  if (token) {
+  const fetchData = async () => {
     try {
-      const decoded = jwtDecode<TokenPayload>(token);
-      userRole = decoded.role;
-    } catch (error) {
-      console.error("Failed to decode token:", error);
+      const params = {
+        page,
+        limit: itemsPerPage,
+        status: statusFilter,
+        sortBy,
+        order: sortOrder,
+      };
+
+      const res = await fetchTasks(params);
+      setTasks(res.items);
+      setTotalTasks(res.total);
+    } catch (err) {
+      console.error("Error fetching tasks:", err);
+      toast.error("Failed to load tasks");
     }
-  }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const params = {
-          page,
-          limit: itemsPerPage,
-          status: statusFilter,
-          sortBy,
-          order: sortOrder,
-          date: dateFilter,
-        };
-
-        const res = await fetchTasks(params);
-        setTasks(res.items);
-        setTotalTasks(res.total);
-      } catch (err) {
-        console.error("Error fetching tasks:", err);
-        toast.error("Failed to load tasks");
-      }
-    };
-
     fetchData();
-  }, [page, itemsPerPage, statusFilter, sortBy, sortOrder, dateFilter]);
+  }, [page, itemsPerPage, statusFilter, sortBy, sortOrder]);
 
   // Reset filter values and pagination
   const resetFilters = () => {
     setStatusFilter("");
-    setDateFilter("");
+    setSortBy("created_at");
+    setSortOrder("asc");
     setPage(1);
   };
 
@@ -99,7 +82,8 @@ const TaskList: React.FC = () => {
       await createTask(task);
       toast.success("Created");
       setIsFormOpen(false);
-      setPage(1); // reset to first page after creating a new task
+      setPage(1);
+      fetchData();
     } catch (err) {
       console.error("Create task error:", err);
       toast.error("Create failed");
@@ -113,17 +97,7 @@ const TaskList: React.FC = () => {
       toast.success("Updated");
       setEditing(null);
       setIsFormOpen(false);
-      const params = {
-        page,
-        limit: itemsPerPage,
-        status: statusFilter,
-        sortBy,
-        order: sortOrder,
-        date: dateFilter,
-      };
-      const res = await fetchTasks(params);
-      setTasks(res.items);
-      setTotalTasks(res.total);
+      fetchData();
     } catch (err: any) {
       console.error("Update task error:", err);
       if (err.response?.status === 403) {
@@ -139,17 +113,7 @@ const TaskList: React.FC = () => {
     try {
       await deleteTask(id);
       toast.success("Deleted");
-      const params = {
-        page,
-        limit: itemsPerPage,
-        status: statusFilter,
-        sortBy,
-        order: sortOrder,
-        date: dateFilter,
-      };
-      const res = await fetchTasks(params);
-      setTasks(res.items);
-      setTotalTasks(res.total);
+      fetchData();
     } catch (err: any) {
       console.error("Delete task error:", err);
       if (err.response?.status === 403) {
@@ -194,12 +158,16 @@ const TaskList: React.FC = () => {
         <select
           value={sortBy}
           onChange={(e) => {
-            setSortBy(e.target.value as "created_at" | "updated_at");
+            setSortBy(
+              e.target.value as "created_at" | "updated_at" | "title" | "status"
+            );
             setPage(1);
           }}
         >
           <option value="created_at">Created</option>
           <option value="updated_at">Updated</option>
+          <option value="title">Title</option>
+          <option value="status">Status</option>
         </select>
         <button
           className="btn sort-order"
@@ -207,16 +175,8 @@ const TaskList: React.FC = () => {
             setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"))
           }
         >
-          {sortOrder === "asc" ? "Asc" : "Desc"}
+          {sortOrder === "asc" ? <FaSortUp /> : <FaSortDown />}
         </button>
-        <input
-          type="date"
-          value={dateFilter}
-          onChange={(e) => {
-            setDateFilter(e.target.value);
-            setPage(1);
-          }}
-        />
         <button className="btn reset" onClick={resetFilters}>
           <FaUndo />
         </button>

@@ -1,5 +1,4 @@
-// src/styles/Register.scss
-@import "./variables.scss";
+@use "./variables.scss" as *;
 
 .register-container {
   max-width: 400px;

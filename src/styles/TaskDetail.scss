@@ -1,5 +1,4 @@
-// src/styles/TaskDetail.scss
-@import "./variables.scss";
+@use "./variables.scss" as *;
 
 .task-detail {
   max-width: 600px;

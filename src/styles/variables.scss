@@ -1,4 +1,4 @@
-// src/styles/variables.scss
+@use "sass:color";
 
 $primary-color: #007bff;
 $background-color: #f5f5f5;
@@ -9,8 +9,8 @@ $border-color: #ccc;
 $bg-light: $background-color;
 $bg-white: #fff;
 $text-dark: $text-color;
-$text-muted: darken($text-color, 30%);
-$bg-hover: lighten($background-color, 5%);
+$text-muted: color.adjust($text-color, $lightness: 30%);
+$bg-hover: color.adjust($background-color, $lightness: 5%);
 $danger-color: #dc3545;
 
 // Status badges

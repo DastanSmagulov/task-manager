@@ -20,7 +20,6 @@ export const fetchTasks = async (
   params?: FetchTasksParams
 ): Promise<TasksResponse> => {
   const response = await axiosInstance.get<TasksResponse>("/tasks", { params });
-  console.log(response.data.items);
   return response.data;
 };
 
@@ -32,7 +31,6 @@ export const fetchTask = async (id: string): Promise<Task> => {
 // Create a new task
 export const createTask = async (taskData: Partial<Task>): Promise<Task> => {
   const response = await axiosInstance.post<Task>("/tasks", taskData);
-  console.log(response, taskData);
   return response.data;
 };
 

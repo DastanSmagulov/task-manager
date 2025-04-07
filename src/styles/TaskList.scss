@@ -1,5 +1,4 @@
-// src/styles/TaskList.scss
-@import "./variables.scss";
+@use "./variables.scss" as *;
 
 .task-list {
   max-width: 600px;
