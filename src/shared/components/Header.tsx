@@ -21,7 +21,7 @@ const Header: React.FC = () => {
     <header className="app-header">
       <div className="container">
         <Link to="/" className="logo">
-          <h1>MyApp</h1>
+          <h1>Task Manager</h1>
         </Link>
         <div className="user-actions">
           {user && (
