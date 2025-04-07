@@ -1,0 +1,42 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin: 1rem 0;
+  gap: 0.5rem;
+
+  .pagination-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  .page-numbers {
+    display: flex;
+    gap: 0.25rem;
+    button {
+      padding: 0.5rem;
+      border: 1px solid #007bff;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+      &.active {
+        background: #007bff;
+        color: white;
+      }
+    }
+  }
+
+  .items-per-page {
+    margin-left: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+}

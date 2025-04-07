@@ -1,0 +1,43 @@
+// src/styles/Login.scss
+@import "./variables.scss";
+
+.login-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      border: 1px solid $border-color;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 0.75rem;
+      font-size: 1rem;
+      background-color: $primary-color;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+}

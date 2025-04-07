@@ -1,0 +1,76 @@
+// src/styles/TaskList.scss
+@import "./variables.scss";
+
+.task-list {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .btn.new {
+      background: $primary-color;
+      color: $bg-white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+    }
+  }
+
+  .controls {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    align-items: center;
+
+    svg {
+      color: $text-muted;
+    }
+
+    select,
+    input {
+      flex: 1;
+      padding: 0.4rem;
+      border: 1px solid $border-color;
+      border-radius: 0.3rem;
+    }
+
+    .btn.reset {
+      background: none;
+      border: none;
+      color: $text-muted;
+    }
+  }
+
+  .list {
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid $border-color;
+
+      .title {
+        text-decoration: none;
+        color: $text-color;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .actions button {
+        background: none;
+        border: none;
+        color: $text-color;
+        margin-left: 0.5rem;
+      }
+    }
+  }
+}
+
+.delete-text {
+  margin-left: 20px;
+}

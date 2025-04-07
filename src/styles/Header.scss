@@ -1,0 +1,62 @@
+// src/styles/Header.scss
+@import "./variables.scss";
+
+.app-header {
+  background: $bg-white;
+  border-bottom: 1px solid $border-color;
+  padding: 0.5rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: $primary-color;
+  }
+
+  .nav {
+    display: flex;
+    gap: 1rem;
+
+    .nav-item {
+      text-decoration: none;
+      color: $text-color;
+      font-weight: 500;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      transition: background 0.2s;
+
+      &:hover {
+        background: $bg-hover;
+      }
+    }
+  }
+
+  .user-actions {
+    .btn.logout {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: $danger-color;
+      color: $bg-white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: darken($danger-color, 8%);
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+// src/styles/variables.scss
+
+$primary-color: #007bff;
+$background-color: #f5f5f5;
+$text-color: #333;
+$border-color: #ccc;
+
+// Additional semantic vars
+$bg-light: $background-color;
+$bg-white: #fff;
+$text-dark: $text-color;
+$text-muted: darken($text-color, 30%);
+$bg-hover: lighten($background-color, 5%);
+$danger-color: #dc3545;
+
+// Status badges
+$status-pending: #ffc107;
+$status-in-progress: #17a2b8;
+$status-completed: #28a745;
